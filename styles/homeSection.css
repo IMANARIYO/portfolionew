@@ -1,0 +1,132 @@
+/* Home Section Styling */
+
+  
+  .home-container {
+    display: flex;
+    padding-top: 30px;
+    justify-content: space-between;
+
+
+    gap: 40px;
+  }
+
+  /* Home Content */
+  .home-content {
+ flex: 2;
+  /* box-shadow: var(--shadow-medium); */
+    padding: 20px;
+    text-align: initial;
+  }
+  
+  .welcome-text {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--primary-color);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 10px;
+  }
+  
+  .name-intro {
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 1.2;
+  
+    color: var(--text-color);
+  }
+  
+  .highlighted-name {
+    color: var(--secondary-color);
+  }
+  
+  .role-intro {
+    font-size: 36px;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 30px;
+  }
+  
+  .dynamic-role {
+    color: var(--secondary-color);
+  }
+  
+  .intro-text {
+    font-size: 1.5rem;
+    line-height: 1.6;
+    color: var(--text-color);
+    margin-bottom: 40px;
+  }
+  
+  /* Action Buttons */
+  .action-buttons {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .button {
+    display: inline-block;
+    padding: 15px 30px;
+    font-size: 18px;
+    font-weight: 600;
+    color: black;
+    background-color: var(--text-color);
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .button:hover {
+    background-color:var(--secondary-color);
+    transform: translateY(-3px);
+    scale: 1.1;
+  }
+  
+  /* Home Image */
+  .home-image {
+   
+    flex: 1;
+
+  }
+  
+  .home-image img {
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: var(--shadow-medium);
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 1024px) {
+    .home-container {
+      flex-direction: column;
+      text-align: center;
+    }
+  
+    .home-content {
+      max-width: 100%;
+    }
+  
+    .home-image {
+      max-width: 80%;
+      margin: 0 auto;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .name-intro {
+      font-size: 36px;
+    }
+  
+    .role-intro {
+      font-size: 28px;
+    }
+  
+    .action-buttons {
+      flex-direction: column;
+      gap: 15px;
+    }
+  
+    .button {
+      width: 100%;
+    }
+  }
+  
