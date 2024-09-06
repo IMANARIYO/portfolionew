@@ -78,7 +78,7 @@
   .button:hover {
     background-color:var(--secondary-color);
     transform: translateY(-3px);
-    scale: 1.1;
+    scale: 1.01;
   }
   
   /* Home Image */
