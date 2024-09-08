@@ -205,7 +205,7 @@ flex-wrap: wrap;
 
 
 /* Responsive Design */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .contact-wrapper,
   .upper-section {
    flex-direction: column;
