@@ -15,11 +15,6 @@ background-color: rgb(14, 13, 13);
 
   }
 
-  .menu-item.active {
-    background-color: blue;
-    color: indigo;
-    transform: scale(1.05);
-  }
   
   .logo {
     display: flex;
@@ -43,7 +38,7 @@ background-color: rgb(14, 13, 13);
   }
   
   .menu-item {
-    color: var(--menu-item-color);
+  
     text-decoration: none;
     font-size: 1rem;
     font-weight: 500;
@@ -52,11 +47,12 @@ background-color: rgb(14, 13, 13);
     transition: background-color var(--transition-medium), 
                 transform var(--transition-medium);
   }
-  
-  .menu-item:hover,
-  .menu-item.active {
-    background-color: var(--menu-item-hover-bg);
-    color: var(--menu-item-active-color);
+  .menu-item.activee,
+  .menu-item:hover
+ {
+    /* background-color: var(--secondary-color); */
+    color: var(--secondary-color);
+    border-bottom: 2px solid var(--secondary-color);
     transform: scale(1.05);
   }
   
