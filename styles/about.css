@@ -200,6 +200,26 @@ margin-bottom: 20px;
   
   border-radius: 10px;
 }
+.highlight{
+  color: var(--secondary-color);
+  border-bottom: yellow solid 2px;
+  border-radius: 20px;
+  padding: 4px;
+}
+.highlight:hover{
+  color: var(--secondary-color);
+  border-bottom: yellow solid 2px;
+  border-radius: 20px;
+
+  background-color: seagreen;
+  padding: 4px;
+}
+
+.company.logo{
+  width: 150px;
+  height: 150px;
+  border-radius: 18px;
+}
 
 .skill i {
   font-size: 5rem;
