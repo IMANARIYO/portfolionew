@@ -1,16 +1,16 @@
 @media (min-width: 769px) {
     .navbar {
-      padding: 1rem 3rem; /* Increase padding for larger screens */
+      padding: 1rem 3rem;
     }
   
     .menu-item {
-      padding: 0.5rem 1.5rem; /* Increase padding for better spacing */
+      padding: 0.5rem 1.5rem;
     }
   
    
   }
   
-  /* Mobile Menu Styling */
+
   @media (max-width: 768px) {
     .lower_section{
         flex-direction: column;
@@ -26,7 +26,7 @@
         display: none;
     }
     .navbar {
-      padding: 1rem 1rem; /* Decrease padding for smaller screens */
+      padding: 1rem 1rem;
     }
   
    
@@ -40,9 +40,9 @@
           display: none;
           flex-direction: column;
           width: 50%;
-          background-color: #282c34; /* Match background */
+          background-color: #282c34;
           position: absolute;
-          top: 60px; /* Adjust based on navbar height */
+          top: 60px; 
           right: 0;
           padding: 1rem;
           border-radius: 8px;

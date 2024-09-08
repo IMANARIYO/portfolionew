@@ -31,14 +31,14 @@
   --fourth-level-padding: 40px;
   --fifth-level-padding: 50px;
 }
-/* Contact Wrapper Styling */
+
 .contact-wrapper {
  display: flex;
   gap: 20px;
   
 }
 
-/* Contact Form and Map Styling */
+
 .contact-form, .contact-map, .right-contact {
   background-color: #fff;
   border-radius: 10px;
@@ -184,6 +184,11 @@ width: 100%;
 }
 
 /* Contact Icon Colors */
+.contact-icon{
+  display: flex;
+gap: 2px;
+flex-wrap: wrap;
+}
 .contact-icon.email {
   background-color: #ea4335;
 }
@@ -194,7 +199,7 @@ width: 100%;
 
 /* Hover Effects */
 .social-icon:hover, .contact-icon:hover {
-  transform: scale(1.1);
+  transform: scale(1.01);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 

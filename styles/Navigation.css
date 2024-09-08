@@ -47,7 +47,7 @@ background-color: rgb(14, 13, 13);
     text-decoration: none;
     font-size: 1rem;
     font-weight: 500;
-    border: 1px solid transparent; /* Default border */
+    border: 1px solid transparent; 
     border-radius: 18px;
     transition: background-color var(--transition-medium), 
                 transform var(--transition-medium);

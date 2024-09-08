@@ -76,14 +76,19 @@ a {
 .content-subtitle {
   color: var(--secondary-color);
   font-size: 1.5rem;
-  font-weight: bold;
+  /* font-weight: bold; */
   /* border-bottom: var(--primary-color) 1px solid; */
   border-left: var(--primary-color) 1px solid;
   padding-left: 4px;
+  padding-right: 4px;
+  border-radius: 18px;
+  font-style: italic;
+
+  
 }
 .content-subtitle:hover {
-  border-bottom: yellow 2px solid;
-  border-left: yellow 2px solid;
+  border-bottom: rgb(247, 255, 7) 2px solid;
+  border-left: rgba(234, 255, 0, 0.962) 2px solid;
 }
 .content-container {
   padding: 0rem 2rem;
