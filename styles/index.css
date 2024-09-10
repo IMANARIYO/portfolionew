@@ -63,6 +63,7 @@ a {
   padding-top: 60px;
   background-color: var(--main-bg-color);
 
+
   /* height: 100vh; */
   /* min-height: fit-content; */
 }
@@ -79,8 +80,7 @@ a {
   /* font-weight: bold; */
   /* border-bottom: var(--primary-color) 1px solid; */
   border-left: var(--primary-color) 1px solid;
-  padding-left: 4px;
-  padding-right: 4px;
+padding: 1rem;
   border-radius: 18px;
   font-style: italic;
 
@@ -91,7 +91,7 @@ a {
   border-left: rgba(234, 255, 0, 0.962) 2px solid;
 }
 .content-container {
-  padding: 0rem 2rem;
+  padding: 0rem 0.5rem;
 }
 footer {
   text-align: center;
