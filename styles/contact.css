@@ -56,6 +56,8 @@ width: 100%;
 .form-group {
   position: relative;
   margin-bottom: 20px;
+display: flex;
+  flex-direction: column-reverse;
 
  
 }
@@ -73,24 +75,13 @@ width: 100%;
   transition: background-color 0.3s, border-color 0.3s;
 }
 
-.form-group input:focus, .form-group textarea:focus {
+/* .form-group input:focus, .form-group textarea:focus {
   background-color: #fff;
 
   outline: none;
 }
 
-.form-group label {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  transform: translateY(-50%);
-  font-size: 16px;
-  color: #aaa;
-  pointer-events: none;
-  transition: all 0.3s ease;
-  padding: 0 5px;
-  background-color: #fff;
-}
+
 
 .form-group input:focus + label, .form-group textarea:focus + label,
 .form-group input:not(:placeholder-shown) + label,
@@ -98,6 +89,18 @@ width: 100%;
   top: -10px;
   left: 10px;
   font-size: 15px;
+} */
+.form-group label {
+  /* position: absolute; */
+  /* top: 50%;
+  left: 0;
+  transform: translateY(-50%); */
+  font-size: 16px;
+  color: #aaa;
+  pointer-events: none;
+  transition: all 0.3s ease;
+  padding: 0 5px;
+  background-color: #fff;
 }
 
 .btn-submit {
