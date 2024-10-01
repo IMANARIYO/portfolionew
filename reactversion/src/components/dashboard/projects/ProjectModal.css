@@ -1,0 +1,68 @@
+/* ProjectModal.css */
+.modal-container {
+    background-color: #2c3e50;
+    padding: 20px;
+    border-radius: 10px;
+    width: 50%;
+    margin: 5% auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .modal-title {
+    color: #ecf0f1;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 16px;
+  }
+  
+  .form-group {
+    margin-bottom: 16px;
+  }
+  
+  .form-label {
+    display: block;
+    color: #bdc3c7;
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+  
+  .form-input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #7f8c8d;
+    border-radius: 6px;
+    background-color: #34495e;
+    color: #ecf0f1;
+    font-size: 16px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .form-input:focus {
+    border-color: #3498db;
+    outline: none;
+  }
+  
+  .input-error {
+    border-color: #e74c3c;
+  }
+  
+  .error-message {
+    color: #e74c3c;
+    font-size: 12px;
+    margin-top: 4px;
+  }
+  
+  .submit-button {
+    background-color: #3498db;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .submit-button:hover {
+    background-color: #2980b9;
+  }
+  

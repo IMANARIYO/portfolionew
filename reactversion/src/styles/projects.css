@@ -1,0 +1,176 @@
+/* Container for the filter section */
+.filter-container {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+/* Style for filter dropdown */
+.filter-select {
+  padding: 12px 24px; /* Increased padding for better spacing */
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #fff;
+  cursor: pointer;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover effect on filter dropdown */
+.filter-select:hover {
+  border-color: #007bff;
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3); /* Softer shadow */
+}
+
+/* Project container grid layout */
+.projects-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Dynamic columns */
+  gap: 24px; /* Increased gap for better spacing between items */
+  padding: 0 10px;
+}
+
+/* Individual project card */
+.project-item {
+  border-radius: 18px;
+  overflow: hidden;
+  background-color: #fff;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08); /* Softer shadow for modern look */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  cursor: pointer;
+}
+
+/* Hover effect for project card */
+.project-item:hover {
+  transform: translateY(-8px); /* Slightly reduced hover lift */
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15); /* Softer shadow on hover */
+}
+
+/* Ensure image control inside the card */
+.project-item img {
+  width: 100%;
+  height: 220px; /* Slightly taller height for better aspect ratio */
+  object-fit: cover;
+  display: block;
+  border-radius: 18px 18px 0 0;
+}
+
+/* Title bar at the bottom of the project card */
+.project-title-bar {
+  background-color: rgba(0, 0, 0, 0.75);
+  padding: 12px;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  border-radius: 0 0 18px 18px;
+  text-align: center;
+}
+
+/* Style for project title */
+.project-title {
+  font-size: 21px; /* Increased font size */
+  font-weight: 700; /* Bold for better emphasis */
+  color: #fff;
+  margin: 0;
+  letter-spacing: 0.8px; /* More spacing for cleaner look */
+  text-transform: uppercase; /* Adds prominence */
+}
+
+/* Overlay with more details about the project */
+.project-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.85);
+  color: #fff;
+  border-radius: 18px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  text-align: center;
+}
+
+/* Show overlay on hover */
+.project-item:hover .project-overlay {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Project description inside the overlay */
+.project-description {
+  font-size: 17px; /* Increased for better readability */
+  margin-bottom: 12px;
+  line-height: 1.6;
+  color: #f0f0f0; /* Softer color for text contrast */
+}
+
+/* Tech stack and company info */
+.project-tech,
+.project-company {
+  font-size: 15px;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #ddd; /* Lighter text for contrast */
+}
+
+/* Links inside project overlay (e.g., GitHub, Visit) */
+.project-link {
+  display: inline-block;
+  margin: 8px 10px; /* Added top margin for spacing */
+  padding: 10px 18px; /* Increased padding for better button look */
+  font-size: 15px;
+  color: #fff;
+  background-color: #007bff;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+/* Hover effect for links */
+.project-link:hover {
+  background-color: #0056b3;
+  transform: translateY(-3px);
+}
+
+/* GitHub-specific button style */
+.github-link {
+  background-color: #333;
+}
+
+/* Hover effect for GitHub link */
+.github-link:hover {
+  background-color: #000;
+}
+
+/* Visit link specific style */
+.visit-link {
+  background-color: #28a745;
+}
+
+/* Hover effect for Visit link */
+.visit-link:hover {
+  background-color: #218838;
+}
+
+/* Responsive design ensures titles remain visually appealing on small screens */
+@media (max-width: 768px) {
+  .project-title {
+    font-size: 18px;
+    letter-spacing: 0.6px;
+  }
+
+  .project-description {
+    font-size: 15px;
+  }
+
+  .project-item img {
+    height: 180px; /* Adjust image height for smaller screens */
+  }
+}
