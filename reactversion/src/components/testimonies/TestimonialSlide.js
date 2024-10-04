@@ -12,15 +12,15 @@ const TestimonialSlide = ({
   mainTestimony
 }) => {
   return (
-    <div className='w-full'>
-      <div className='flex flex-col justify-between w-full h-auto p-4 lgl:flex-row'>
-        <div className='sm:block md:block w-full lgl:w-[35%] h-full bg-gradient-to-r from-[#1e2024] to-[#23272b] p-8 rounded-lg flex flex-col md:flex-row lgl:flex-col gap-8 justify-center md:justify-start lgl:justify-center'>
+    <section className=''>
+      <div className='flex flex-col gap-3  h-auto p-4 lgl:flex-row justify-center items-center '>
+        <div className='sm:block md:block  lgl:max-w-[35%]  h-full bg-gradient-to-r from-[#1e2024] to-[#23272b] p-8 rounded-lg flex flex-col md:flex-row lgl:flex-col  justify-center md:justify-start lgl:justify-center'>
           <img
             className='object-cover rounded-lg h-72 md:h-32 lgl:h-72'
             src={image}
             alt={name}
           />
-          <div className='flex flex-col justify-end w-full'>
+          <div className='flex flex-col justify-end '>
             <p className='mb-2 text-xs tracking-wide uppercase text-designColor'>
               { company}
             </p>
@@ -33,14 +33,14 @@ const TestimonialSlide = ({
           </div>
         </div>
 
-        <div className='w-full lgl:w-[60%] h-full flex flex-col justify-between'>
+        <div className=' lgl:w-[60%] h-full flex flex-col justify-between'>
           <img
             className='w-20 lgl:w-32 sm:hidden md:hidden'
             src={quote}
             alt='quote'
           />
 
-          <div className='w-full h-[70%] py-10 bg-gradient-to-r from-[#1e2024] to-[#23272b] rounded-lg shadow-shadowTwo p-4 lgl:p-8 flex flex-col justify-center gap-4 lgl:gap-8'>
+          <div className=' h-[70%] py-10 bg-gradient-to-r from-[#1e2024] to-[#23272b] rounded-lg shadow-shadowTwo p-4 lgl:p-8 flex flex-col justify-center gap-4 lgl:gap-8'>
             <div className='flex flex-col justify-between py-6 border-b-2 lgl:items-center border-b-gray-900'>
               <div>
                 <h3 className='text-xl font-medium text-white racking-wide lgl:text-2xl'>
@@ -63,8 +63,9 @@ const TestimonialSlide = ({
             </p>
           </div>
         </div>
+
       </div>
-    </div>
+    </section>
   )
 }
 

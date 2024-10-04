@@ -3,7 +3,7 @@ import { Box, Button, Card, CardContent, CardMedia, Modal, TextField, Typography
 import { DataGrid } from "@mui/x-data-grid";
 import { experience } from "../../data/about";
 
-const ExperienceTable = () => {
+const ExperienceTableModule = () => {
     const [experienceData, setExperienceData] = useState(experience);
     const [modalOpen, setModalOpen] = useState(false);
     const [currentItem, setCurrentItem] = useState(null);
@@ -143,4 +143,4 @@ const ExperienceTable = () => {
     );
 };
 
-export default ExperienceTable;
+export default ExperienceTableModule;

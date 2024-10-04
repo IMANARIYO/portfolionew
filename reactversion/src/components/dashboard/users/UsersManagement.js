@@ -1,63 +1,81 @@
 import React, { useEffect, useState } from "react";
+import UserService from "../../../apirequest/UserServiceApi";
 import { Box, Button, Modal, TextField, Typography } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
+
+// import UserService from "./api";
 
 const UsersManagement = () => {
     const [users, setUsers] = useState([]); // State to hold user data
     const [modalOpen, setModalOpen] = useState(false); // Modal state for adding/editing user
     const [currentUser, setCurrentUser] = useState(null); // Current user being edited
+    const [loading, setLoading] = useState(true); // Loading state
 
     useEffect(() => {
         loadUsers(); // Load users when component mounts
     }, []);
 
-    // Load users from the backend (placeholder API call)
+    // Load users from the backend
     const loadUsers = async () => {
-        const fetchedUsers = await fetchUsers();
-        setUsers(fetchedUsers);
+        try {
+            setLoading(true);
+            const response = await UserService.getAllUsers(); // Use the actual API call
+            setUsers(response.data); // Set the users from the response
+            setLoading(false);
+        } catch (error) {
+            console.error("Failed to fetch users:", error);
+            setLoading(false);
+        }
     };
 
-    // Placeholder function for fetching users from an API
-    const fetchUsers = async () => {
-        // Replace with actual API call
-        return [
-            { _id: '1', fullNames: 'Alice Johnson', email: 'alice@example.com', phoneNumber: '123-456-7890', role: 'Admin' },
-            { _id: '2', fullNames: 'Bob Smith', email: 'bob@example.com', phoneNumber: '987-654-3210', role: 'User' },
-            { _id: '3', fullNames: 'Charlie Brown', email: 'charlie@example.com', phoneNumber: '555-123-4567', role: 'User' },
-        ];
-    };
-
-    // Placeholder function for adding a user
+    // Function to add a new user
     const addUser = async (userData) => {
-        console.log("Adding user:", userData);
+        try {
+            await UserService.signup(userData); // Call the signup API to add a user
+            loadUsers(); // Reload users after adding
+        } catch (error) {
+            console.error("Failed to add user:", error);
+        }
     };
 
-    // Placeholder function for editing a user
+    // Function to edit an existing user
     const editUser = async (id, userData) => {
-        console.log("Editing user:", id, userData);
+        try {
+            await UserService.updateUserById(id, userData); // Call the update API to edit a user
+            loadUsers(); // Reload users after editing
+        } catch (error) {
+            console.error("Failed to edit user:", error);
+        }
     };
 
-    // Placeholder function for deleting a user
+    // Function to delete a user
     const deleteUser = async (id) => {
-        console.log("Deleting user:", id);
+        try {
+            // You can add a delete API call if it exists in your UserService
+            // e.g., await UserService.deleteUser(id);
+            console.log(`Deleting user ${id} - you need to implement this in your API.`);
+            loadUsers(); // Reload users after deletion
+        } catch (error) {
+            console.error("Failed to delete user:", error);
+        }
     };
 
     // Open modal for adding a new user
     const handleAddUser = () => {
-        setCurrentUser(null);
-        setModalOpen(true);
+        setCurrentUser(null); // Reset currentUser to null when adding a new user
+        setModalOpen(true); // Open modal
     };
 
     // Open modal for editing an existing user
     const handleEditUser = (user) => {
-        setCurrentUser(user);
-        setModalOpen(true);
+        setCurrentUser(user); // Set the user to be edited
+        setModalOpen(true); // Open modal
     };
 
     // Close the modal
     const handleCloseModal = () => {
-        setModalOpen(false);
-        setCurrentUser(null);
+        setModalOpen(false); // Close modal
+        setCurrentUser(null); // Reset currentUser
     };
 
     // Save user (add/edit)
@@ -70,18 +88,16 @@ const UsersManagement = () => {
         };
 
         if (currentUser) {
-            await editUser(currentUser._id, userData);
+            await editUser(currentUser._id, userData); // Edit existing user
         } else {
-            await addUser(userData);
+            await addUser(userData); // Add new user
         }
-        loadUsers(); // Reload users
-        handleCloseModal(); // Close modal
+        handleCloseModal(); // Close modal after saving
     };
 
     // Delete user
     const handleDeleteUser = async (id) => {
-        await deleteUser(id);
-        loadUsers(); // Reload users
+        await deleteUser(id); // Call the delete function
     };
 
     // Columns for the DataGrid
@@ -117,6 +133,7 @@ const UsersManagement = () => {
                     columns={columns}
                     pageSize={5}
                     getRowId={(row) => row._id} // Use _id as the unique identifier
+                    loading={loading} // Show loading state if data is being fetched
                 />
             </div>
 
@@ -129,6 +146,7 @@ const UsersManagement = () => {
                         fullWidth
                         required
                         defaultValue={currentUser ? currentUser.fullNames : ''}
+                        placeholder="Full Names"
                     />
                     <TextField
                         label="Email"
@@ -136,16 +154,19 @@ const UsersManagement = () => {
                         fullWidth
                         required
                         defaultValue={currentUser ? currentUser.email : ''}
+                        placeholder="Email"
                     />
                     <TextField
                         label="Phone Number"
                         fullWidth
                         defaultValue={currentUser ? currentUser.phoneNumber : ''}
+                        placeholder="Phone Number"
                     />
                     <TextField
                         label="Role"
                         fullWidth
                         defaultValue={currentUser ? currentUser.role : ''}
+                        placeholder="Role"
                     />
                     <Button
                         variant="contained"

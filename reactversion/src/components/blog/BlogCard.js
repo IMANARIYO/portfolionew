@@ -1,42 +1,57 @@
+import "./BlogSection.css";
+import DOMPurify from "dompurify";
 import PropTypes from "prop-types";
 import React from "react";
+import { formatDistanceToNow } from "date-fns";
 
-// import "./BlogCard.css";
-
-const BlogCard = ({ post }) => {
+const BlogCard = ({ post, onReadMore }) => {
+  // Sanitize the title and description
+  const sanitizedTitle = DOMPurify.sanitize(post.title).slice(0, 50); // Sanitize and limit length
+  const sanitizedDescription = DOMPurify.sanitize(post.description).slice(0, 100); // Sanitize and limit length
+  const timeAgo = formatDistanceToNow(new Date(post.createdAt), { addSuffix: true });
   return (
     <div className="blog-item">
       <div className="blog-image-wrapper">
         <img
           src={post.image}
-          alt={`Blog Post: ${post.title}`}
+          alt={`Blog Post: ${sanitizedTitle}`} // Use sanitized title for alt text
           className="blog-image"
         />
-        <div className="blog-category-overlay">{post.category}</div>
+        <div className="blog-category-overlay">
+          {post.category.slice(0, 60)}
+        </div>
       </div>
       <div className="blog-content">
-        <h3 className="blog-title">{post.title}</h3>
-        <p className="blog-excerpt">{post.excerpt}</p>
+        <h3 className="blog-title ">{sanitizedTitle}</h3>
+
+        {/* Render the sanitized description using dangerouslySetInnerHTML */}
+        <div
+          className="blog-excerpt"
+          dangerouslySetInnerHTML={{
+            __html: DOMPurify.sanitize(post.description).slice(0, 100), // Safely render sanitized description
+          }}
+        ></div>
+
         <div className="blog-meta">
           <span className="blog-author">
             <img
-              src={post.authorImage}
-              alt="Author"
+              src={`${"/images/myImage.png"}`}
+              alt="imanariyo baptiste"
               className="author-photo"
             />
           </span>
           <div className="authName-date">
-            <span>{post.author}</span>
-            <span className="blog-date">{post.date}</span>
+            <span>{"imanariyo baptiste"}</span>
+            <span className="blog-date">{timeAgo}</span> 
           </div>
-          <a href={post.readMoreLink} className="blog-read-more">
+          <button onClick={() => onReadMore(post)} className="blog-read-more">
             Read More
-          </a>
+          </button>
         </div>
         <div className="blog-interactions">
           <span className="likes">{post.likes} Likes</span>
           <span className="dislikes">{post.dislikes} Dislikes</span>
-          <span className="comments">{post.comments} Comments</span>
+          <span className="comments">{post.comments.length} Comments</span>
         </div>
       </div>
     </div>
@@ -48,16 +63,13 @@ BlogCard.propTypes = {
   post: PropTypes.shape({
     image: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
-    excerpt: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
     category: PropTypes.string.isRequired,
-    author: PropTypes.string.isRequired,
-    authorImage: PropTypes.string.isRequired,
-    date: PropTypes.string.isRequired,
-    readMoreLink: PropTypes.string.isRequired,
     likes: PropTypes.number.isRequired,
     dislikes: PropTypes.number.isRequired,
-    comments: PropTypes.number.isRequired,
+    comments: PropTypes.array.isRequired,
   }).isRequired,
+  onReadMore: PropTypes.func.isRequired,
 };
 
 export default BlogCard;

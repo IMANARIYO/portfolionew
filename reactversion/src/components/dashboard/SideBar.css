@@ -1,0 +1,80 @@
+/* Styles for sidebar container */
+.sidebar-container {
+    transition: width 0.3s ease; /* Smooth transition for width */
+  }
+  
+  /* Styles for toggle button */
+  .sidebar-toggle {
+    padding: 8px; /* Padding for the button */
+    background: transparent; /* No background */
+    border: none; /* No border */
+    cursor: pointer; /* Pointer cursor */
+  }
+  
+  /* Styles for sidebar header */
+  .sidebar-header {
+    border-bottom: 1px solid #4a5568; /* Bottom border */
+  }
+  
+  /* Sidebar title styles */
+  .sidebar-title {
+    color: #ffffff; /* White text color */
+    transition: opacity 0.3s ease; /* Smooth transition for opacity */
+  }
+  
+  /* List styles */
+  .sidebar-list {
+    list-style-type: none; /* No bullet points */
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margin */
+  }
+  
+  /* Styles for individual sidebar items */
+  .sidebar-item {
+    display: flex; /* Flexbox layout */
+    align-items: center; /* Center items */
+    padding: 12px; /* Padding around items */
+    transition: background 0.2s ease; /* Smooth background change */
+  }
+  
+  /* Styles for sidebar links */
+  .sidebar-link {
+    display: flex; /* Flexbox layout */
+    align-items: center; /* Center items */
+    color: #ffffff; /* White text */
+    text-decoration: none; /* Remove underline */
+    width: 100%; /* Full width */
+  }
+  
+  /* Hover effect for sidebar items */
+  .sidebar-item:hover {
+    background-color: #4a5568; /* Darker gray on hover */
+  }
+  
+  /* Icon styles */
+  .icon {
+    color: #a0aec0; /* Light gray color for icons */
+    transition: color 0.3s ease; /* Smooth transition for icon color */
+  }
+  
+  /* Change icon color on hover */
+  .sidebar-item:hover .icon {
+    color: #ffffff; /* Change icon color on hover */
+  }
+  
+  /* Label styles */
+  .sidebar-label {
+    margin-left: 10px; /* Space between icon and label */
+    transition: opacity 0.3s ease; /* Smooth transition for opacity */
+  }
+  
+  /* Open state styles */
+  .sidebar-item-open {
+    background-color: #2d3748; /* Darker background when open */
+  }
+  
+  /* Closed state styles */
+  .sidebar-item-closed {
+    background-color: transparent; /* Transparent background when closed */
+  }
+  

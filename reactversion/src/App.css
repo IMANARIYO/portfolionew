@@ -75,7 +75,10 @@ a {
   /* min-height: fit-content; */
 }
 
-
+#dashbaord{
+  padding-top: 100px;
+  border: 3px green solid;
+}
 
 .content-title {
   color: var(--primary-color);
@@ -110,7 +113,9 @@ footer {
   margin-top: 40px;
   box-shadow: var(--shadow-light);
 }
-
+.section {
+  padding: 0 10px;
+}
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;

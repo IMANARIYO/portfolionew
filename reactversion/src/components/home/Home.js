@@ -1,4 +1,5 @@
 import "./Home.css";
+import Media from "./Media";
 import React, { useEffect, useState } from "react";
 
 const Home = () => {
@@ -52,13 +53,16 @@ const Home = () => {
                 </a>
                 <a href="#contacts" className="button">Hire Me</a>
               </div>
+             
             </div>
+          
           </div>
           <div className="home-image">
             <img src="images/myImage.png" alt="My Photo" />
           </div>
         </div>
       </div>
+   
     </section>
   );
 };

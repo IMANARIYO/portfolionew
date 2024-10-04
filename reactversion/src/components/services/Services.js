@@ -1,11 +1,24 @@
 import "./Services.css";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ServiceItem from "./ServiceItem";
+import { getAllServices } from "../../apirequest/serviceApi";
 import { serviceData } from "../data/services";
 
   
 
 const Services = () => {
+  const [services, setServices] = useState(serviceData);
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        const fetchedServices = await getAllServices();
+        setServices(fetchedServices.data || []);  // Ensure it's always an array
+      } catch (error) {
+        console.error("Error fetching services:", error);
+      }
+    };
+    fetchServices();
+  }, []);
   return (
     <section id="services" className="section">
       <div className="container content-container">
@@ -18,7 +31,7 @@ const Services = () => {
         </p>
 
         <div className="services-container">
-          {serviceData.map((service, index) => (
+          {services.map((service, index) => (
             <ServiceItem
               key={index}
               image={service.image}

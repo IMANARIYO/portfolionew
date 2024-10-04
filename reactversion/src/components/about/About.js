@@ -2,6 +2,8 @@ import "./About.css";
 import React, { useEffect, useState } from "react";
 import { education, experience, skills } from "../data/about";
 
+// import { education } from "../data/about";
+
 const AboutMe = () => {
   // Skills data structure
 
@@ -30,6 +32,13 @@ const AboutMe = () => {
     setMainImage(src);
   };
 
+    // Define the sections that will automatically cycle
+  const sections = ["skills", "education", "experience"];
+
+
+
+
+  // Event handler for skill navigation
   return (
     <section id="about" className="section">
       <div className="container content-container">
@@ -212,6 +221,8 @@ const AboutMe = () => {
                         </div>
                       </div>
                     </div>
+
+                    
                   </div>
                 )}
 

@@ -1,7 +1,11 @@
 import api from "./api";
 
 export const createBlog = async (blogData) => {
-  const response = await api.post('/Blogs/createBlog', blogData);
+  const response = await api.post('/Blogs/createBlog', blogData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
   return response.data;
 };
 
@@ -16,9 +20,14 @@ export const getBlogById = async (id) => {
 };
 
 export const updateBlogById = async (id, blogData) => {
-  const response = await api.put(`/Blogs/updateBlog/${id}`, blogData);
+  const response = await api.put(`/Blogs/updateBlog/${id}`, blogData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
   return response.data;
 };
+
 
 export const deleteBlogById = async (id) => {
   const response = await api.delete(`/Blogs/deleteBlog/${id}`);

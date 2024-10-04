@@ -1,8 +1,8 @@
 /* Container Styles */
 .services-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 30px;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 10px;
     justify-content: center;
   }
   
@@ -14,6 +14,8 @@
   .service-item {
     position: relative;
     display: flex;
+    /* height:fit-content; */
+    margin-bottom: 10px;
     flex-direction: column;
     align-items: center;
     background-color: #fff;

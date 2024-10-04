@@ -1,6 +1,11 @@
+import "react-quill/dist/quill.snow.css";
+import "./ServiceManagement.css";
+import DOMPurify from "dompurify";
 import React, { useEffect, useState } from "react";
+import ReactQuill from "react-quill";
 import axios from "axios";
-import { Box, Button, Input, Modal, TextField, Typography } from "@mui/material";
+import { Box, Button, Input, Modal, Typography } from "@mui/material";
+import { TextField } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useForm } from "react-hook-form";
 
@@ -11,7 +16,7 @@ import {
   deleteServiceById,
 } from "../../../apirequest/serviceApi";
 
-const ServiceManagement = () => {
+const ServiceManagementModule = () => {
   const [services, setServices] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [viewModalOpen, setViewModalOpen] = useState(false);
@@ -34,10 +39,14 @@ const ServiceManagement = () => {
     };
     fetchServices();
   }, []);
-
+  const handleOpenViewModal = (service) => {
+    setCurrentService(service); // Store the service to be viewed
+    setViewModalOpen(true);     // Open the view modal
+  };
+  
   const handleOpenModal = (service) => {
-      setImagePreview(service ? service.image : "");
-      setIsEditing(!!service);
+    setImagePreview(service ? service.image : "");
+    setIsEditing(!!service);
     reset(service || {
       id: null,
       image: "",
@@ -61,6 +70,7 @@ const ServiceManagement = () => {
   const onSubmit = async (data) => {
     const formData = new FormData();
     const { title, description, overlayTitle, overlayDescription, overlayLink, image } = data;
+    
 
     formData.append('title', title);
     formData.append('description', description);
@@ -68,15 +78,14 @@ const ServiceManagement = () => {
     formData.append('overlayDescription', overlayDescription);
     formData.append('overlayLink', overlayLink);
     const hasFile = [...formData.entries()].some(([key, value]) => value instanceof File);
-    console.log("Contains files:", hasFile);
+
     // Only append the image if it's a new one
-    if (image && image.length > 0) {
-        formData.append('image', image[0]); // Add the new image
+    if ((image && image.length > 0) && (image !== currentService?.image)) {
+      formData.append('image', image[0]); // Add the new image
     } else if (currentService && currentService.image) {
-        formData.append('image', currentService.image); // Retain the old image if no new image is uploaded
+      formData.append('image', currentService.image); // Retain the old image if no new image is uploaded
     }
 
-    console.log("Contains files:", hasFile);
     try {
       let response;
       if (isEditing) {
@@ -94,11 +103,6 @@ const ServiceManagement = () => {
     }
   };
 
-  const handleOpenViewModal = (service) => {
-    setCurrentService(service);
-    setViewModalOpen(true);
-  };
-
   const handleDeleteService = async (id) => {
     try {
       await deleteServiceById(id);
@@ -107,6 +111,7 @@ const ServiceManagement = () => {
       console.error("Error deleting service:", error);
     }
   };
+
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -120,7 +125,6 @@ const ServiceManagement = () => {
     }
   };
 
-  // Safeguard against undefined
   const filteredServices = services.filter(service =>
     (service?.title?.toLowerCase().includes(searchTerm.toLowerCase()) || "") ||
     (service?.description?.toLowerCase().includes(searchTerm.toLowerCase()) || "")
@@ -137,7 +141,18 @@ const ServiceManagement = () => {
       ),
     },
     { field: "title", headerName: "Title", width: 250 },
-    { field: "description", headerName: "Description", width: 400 },
+    {
+      field: "description",
+      headerName: "Description",
+      width: 400,
+      renderCell: (params) => (
+        <div
+          dangerouslySetInnerHTML={{
+            __html: DOMPurify.sanitize(params.value).slice(0, 100), // Safely render sanitized description
+          }}
+        />
+      ),
+    },
     { field: "overlayLink", headerName: "Link", width: 200 },
     {
       field: "actions",
@@ -168,7 +183,6 @@ const ServiceManagement = () => {
     <div style={{ padding: '20px' }}>
       <Typography variant="h4" gutterBottom align="center">Service Management</Typography>
       <TextField
-      className="searchbutton bg-slate-400"
         label="Search"
         variant="outlined"
         value={searchTerm}
@@ -188,129 +202,130 @@ const ServiceManagement = () => {
           disableSelectionOnClick
           autoHeight
           className="bg-white"
-          getRowId={(row) => row._id} 
+          getRowId={(row) => row._id}
         />
       </div>
 
-      {/* Modal for adding/editing a service */}
-      <Modal open={modalOpen} onClose={handleCloseModal} className="overflow-auto fixed inset-0 z-10">
-        <Box sx={{
-          padding: 3,
-          backgroundColor: 'white',
-          margin: '50px auto',
-          width: '400px',
-          borderRadius: 2,
-          boxShadow: 3
-        }}>
-          <Typography variant="h6" align="center" className="text-gray-700">{isEditing ? "Edit Service" : "Add Service"}</Typography>
+  {/* Modal for adding/editing a service */}
+{/* Modal for adding/editing a service */}
+<Modal 
+open={modalOpen} 
+ 
+onClose={handleCloseModal}
+>
+  <Box
+  className="modal-content  h-[70vh] overflow-y-auto"
+    sx={{
+      padding: 3,
+      backgroundColor: 'white',
+      margin: '50px auto',
+      width: '90%',
+      borderRadius: 2,
+      boxShadow: 3,
+    }}
+  >
+    <Typography
+      variant="h6"
+      align="center"
+      className="form-heading text-2xl font-semibold text-black"
+    >
+      {isEditing ? 'Edit Service' : 'Add Service'}
+    </Typography>
 
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <TextField
-              label="Title"
-              {...register("title", { required: true })}
-              error={!!errors.title}
-              helperText={errors.title ? "Title is required" : ""}
-              fullWidth
-              margin="normal"
-            />
-            <TextField
-              label="Description"
-              {...register("description", { required: true })}
-              error={!!errors.description}
-              helperText={errors.description ? "Description is required" : ""}
-              fullWidth
-              margin="normal"
-            />
-            <TextField
-              label="Overlay Title"
-              {...register("overlayTitle")}
-              fullWidth
-              margin="normal"
-            />
-            <TextField
-              label="Overlay Description"
-              {...register("overlayDescription")}
-              fullWidth
-              margin="normal"
-            />
-            <TextField
-              label="Overlay Link"
-              {...register("overlayLink")}
-              fullWidth
-              margin="normal"
-            />
-
-            <Input
-                type='file'
-                accept='image/*'
-                name='image'
-                {...register('image')}
-              fullWidth
-              style={{ marginTop: '10px' }}
-            />
-            {/* <TextField
-              label="Image URL"
-              {...register("image")}
-              value={imagePreview || ""}
-              fullWidth
-              margin="normal"
-              placeholder="Or paste image URL here"
-            />
-             */}
-
-            {imagePreview && (
-              <img
-                src={imagePreview}
-                alt="Preview"
-                style={{ width: '100%', height: 'auto', marginTop: '10px' }}
-              />
-            )}
-
-            <Box display="flex" justifyContent="space-between" marginTop="20px">
-              <Button variant="contained" color="primary" type="submit">
-                {isEditing ? "Update" : "Add"}
-              </Button>
-              <Button variant="outlined" color="secondary" onClick={handleCloseModal}>
-                Cancel
-              </Button>
-            </Box>
-          </form>
-        </Box>
-      </Modal>
-
-      {/* View Modal for displaying a service */}
-      <Modal open={viewModalOpen} onClose={handleCloseModal} className="overflow-auto fixed inset-0 z-10">
-        <Box sx={{
-          padding: 3,
-          backgroundColor: 'white',
-          margin: '50px auto',
-          width: '400px',
-          borderRadius: 2,
-          boxShadow: 3,
-          className: 'box bg-blue-400'
-        }}>
-          <Typography variant="h6" align="center" className="text-gray-700">View Service</Typography>
-          {currentService && (
-            <>
-              <img
-                src={currentService.image}
-                alt="Service"
-                style={{ width: '100%', height: 'auto', marginBottom: '10px' }}
-              />
-              <Typography variant="body1"><strong>Title:</strong> {currentService.title}</Typography>
-              <Typography variant="body1"><strong>Description:</strong> {currentService.description}</Typography>
-              <Typography variant="body1"><strong>Overlay Title:</strong> {currentService.overlayTitle}</Typography>
-              <Typography variant="body1"><strong>Overlay Description:</strong> {currentService.overlayDescription}</Typography>
-              <Typography variant="body1"><strong>Link:</strong> {currentService.overlayLink}</Typography>
-            </>
+    <form onSubmit={handleSubmit(onSubmit)} className="modal-form">
+      
+      {/* Group 1: Title vs Overlay Title */}
+      <div className="form-grouping">
+        <div className="formgroup">
+          <label className="formlabel text-sm font-medium text-gray-700">Title</label>
+          <ReactQuill
+            className="forminput p-3 border rounded-lg w-full text-gray-700"
+            value={currentService?.title || ''}
+            onChange={(value) => setValue('title', value)}
+          />
+          {errors.title && (
+            <Typography color="error">Title is required</Typography>
           )}
-          <Button variant="outlined" color="secondary" onClick={handleCloseModal} style={{ marginTop: '20px' }}>
-            Close
-          </Button>
-        </Box>
-      </Modal>
+        </div>
+
+        <div className="formgroup">
+          <label className="formlabel text-sm font-medium text-gray-700">Overlay Title</label>
+          <ReactQuill
+            className="forminput p-3 border rounded-lg w-full text-gray-700"
+            value={currentService?.overlayTitle || ''}
+            onChange={(value) => setValue('overlayTitle', value)}
+          />
+        </div>
+      </div>
+
+      {/* Group 2: Description vs Overlay Description */}
+      <div className="form-grouping">
+        <div className="formgroup">
+          <label className="formlabel text-sm font-medium text-gray-700">Description</label>
+          <ReactQuill
+            className="forminput p-3 border rounded-lg w-full text-gray-700"
+            value={currentService?.description || ''}
+            onChange={(value) => setValue('description', value)}
+          />
+          {errors.description && (
+            <Typography color="error">Description is required</Typography>
+          )}
+        </div>
+
+        <div className="formgroup">
+          <label className="formlabel text-sm font-medium text-gray-700">Overlay Description</label>
+          <ReactQuill
+            className="forminput p-3 border rounded-lg w-full text-gray-700"
+            value={currentService?.overlayDescription || ''}
+            onChange={(value) => setValue('overlayDescription', value)}
+          />
+        </div>
+      </div>
+
+      {/* Group 3: Overlay Link vs Image */}
+      <div className="form-grouping">
+        <div className="formgroup">
+          <label className="formlabel text-sm font-medium text-gray-700">Overlay Link</label>
+          <input
+            className="forminput p-3 border rounded-lg w-full text-gray-700"
+            {...register('overlayLink')}
+          />
+        </div>
+
+        <div className="formgroup">
+          <label className="formlabel text-sm font-medium text-gray-700">Image Upload</label>
+          <input
+            type="file"
+            accept="image/*"
+            className="forminput p-3 border rounded-lg w-full text-gray-700"
+
+   {...register('image')}/>
+          {/* {imagePreview && (
+            <img
+              src={imagePreview}
+              alt="Preview"
+              style={{ width: '100%', height: 'auto', marginTop: '10px' }}
+            />
+          )} */}
+        </div>
+      </div>
+
+      {/* Action buttons */}
+      <div className="action-buttons" style={{ display: 'flex', justifyContent: 'space-between', marginTop: '20px' }}>
+        <button className="btn-primary" type="submit">
+          {isEditing ? 'Update' : 'Add'}
+        </button>
+        <button className="btn-secondary" onClick={handleCloseModal}>
+          Cancel
+        </button>
+      </div>
+    </form>
+  </Box>
+</Modal>
+
+
     </div>
   );
 };
 
-export default ServiceManagement;
+export default ServiceManagementModule;

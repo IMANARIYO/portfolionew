@@ -12,7 +12,7 @@ import { skills } from "../../data/about";
 
 // Import specific icons from react-icons
 
-const SkillsTable = () => {
+const SkillsTableModule = () => {
     const [skillsData, setSkillsData] = useState([
         ...skills.frontend, ...skills.backend, ...skills.databases, ...skills.mobile, ...skills.uiux
     ]);
@@ -173,4 +173,4 @@ const SkillsTable = () => {
     );
 };
 
-export default SkillsTable;
+export default SkillsTableModule;

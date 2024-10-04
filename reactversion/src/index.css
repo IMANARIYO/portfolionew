@@ -105,7 +105,7 @@ footer {
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
-  background-color: var(--background-color);
+  background-color: none;
   border-radius: var(--border-radius);
 }
 
@@ -116,12 +116,12 @@ footer {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #c86b00;
+  background-color:none;
   box-shadow: var(--shadow-dark);
 }
 
 ::-webkit-scrollbar-track {
-  background-color: var(--background-color);
+  background-color:none;
   border-radius: var(--border-radius);
 }
 

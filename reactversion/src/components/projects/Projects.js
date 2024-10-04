@@ -1,10 +1,13 @@
 import "./Project.css";
 import ProjectCard from "./ProjectCard";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import { HiArrowLeft, HiArrowRight } from "react-icons/hi";
+import { toast } from "react-toastify";
+import { getAllProjects } from "../../apirequest/projectApi";
 import { projectData } from "../data/projects";
 
+const initialProject=projectData;
 // Custom Next Arrow
 function SampleNextArrow(props) {
   const { onClick } = props;
@@ -28,7 +31,7 @@ function SamplePrevArrow(props) {
 const ProjectsSection = () => {
   const [dotActive, setDotActive] = useState(0);
   const [selectedTech, setSelectedTech] = useState("all"); // State to track the selected filter
-
+  const [projectData, setProjectData] = useState(initialProject);
   // Function to handle tech filter changes
   const handleFilterChange = (e) => {
     setSelectedTech(e.target.value);
@@ -102,7 +105,19 @@ const ProjectsSection = () => {
       }
     ]
   };
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const response = await getAllProjects();
+        setProjectData(response.data);
+        console.log("projects fetched",response.data);
+      } catch (error) {
+        toast.error("Failed to fetch projects.");
+      }
+    };
 
+    fetchProjects();
+  }, []);
   return (
     <section id="projects" className="section">
       <div className="container content-container">
@@ -133,17 +148,17 @@ const ProjectsSection = () => {
 
         {/* Projects Container */}
        
-          <Slider {...settings}  >
+          <Slider {...settings} className="mt-5"  >
             {filteredProjects.map((project) => (
               <ProjectCard
-                key={project.id}
+                key={project._id}
                 image={project.image}
-                title={project.title}
+                title={project.projectName}
                 description={project.description}
-                techUsed={project.techUsed}
+                techUsed={project.languageUsed}
                 company={project.company}
-                githubLink={project.githubLink}
-                visitLink={project.visitLink}
+                githubLink={project.github}
+                visitLink={project.projectLink}
               />
             ))}
           </Slider>

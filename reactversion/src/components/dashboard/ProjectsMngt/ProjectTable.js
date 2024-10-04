@@ -6,7 +6,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { ToastContainer, toast } from "react-toastify";
 import { createProject, deleteProjectById, getAllProjects, getProjectById, updateProjectById } from "../../../apirequest/projectApi";
 
-export default function ProjectTable() {
+export default function ProjectTableModule() {
   const [projectData, setProjectData] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [newProject, setNewProject] = useState({

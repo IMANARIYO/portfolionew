@@ -1,9 +1,10 @@
 import "slick-carousel/slick/slick.css";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import TestimonialSlide from "./TestimonialSlide";
 import { HiArrowLeft, HiArrowRight } from "react-icons/hi";
 import { RiStarFill } from "react-icons/ri";
+import { getAllTestimonies } from "../../apirequest/testimonyApi";
 import { quote, testimonialOne, testimonialTwo } from "../../assets";
 
 // import Title from "../layouts/Title";
@@ -46,17 +47,35 @@ const testimonials = [
     image: `${testimonialTwo}`,
     name: 'Emily Davis',
     title: 'Product Manager',
+
     company: 'E-Commerce Co.',
     mainTestimony:
       'The project was completed ahead of schedule and exceeded all our expectations. Their team is incredibly talented and professional. Their ability to understand our vision and translate it into a functional and aesthetically pleasing product was truly impressive. We couldn’t have asked for a better partnership.',
     date: 'via LinkedIn - May 1, 2021 - Jan 20, 2023'
   }
 ]
+const initialTestimonials = testimonials
 const Testimonial = () => {
   const [dotActive, setDocActive] = useState(0)
+const[testimonials,setTestimonials]=useState(initialTestimonials)
+
+
+useEffect(() => {
+  const fetchTestimonials = async () => {
+    try {
+      const response=await getAllTestimonies();
+      console.log("testimonials",response.data)
+      setTestimonials(response.data)
+    } catch (error) {
+      console.log("error fetching testimalials")
+    }
+  };
+  fetchTestimonials();
+},[]);
   const settings = {
     dots: true,
     infinite: true,
+    width: '100%',
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
@@ -114,25 +133,25 @@ const Testimonial = () => {
   return (
     <section
       id='testimonial'
-      className='w-full  border-b-[1px] border-b-slate-200'
+      className=' '
     >
-      <h2 class='content-title'>Testimonials</h2>
-      <p class='content-subtitle'>
+      <h2 className='content-title'>Testimonials</h2>
+      <p className='content-subtitle'>
         Hear what My team members colleageues and satisfied clients had to say
         about working with me.
       </p>
       <div className='  '>
-        <Slider {...settings}>
+        <Slider {...settings} className=" mx-auto">
           {testimonials.map((testimonial, index) =>
             <TestimonialSlide
-              key={index}
+              key={testimonial._id}
               image={testimonial.image}
               name={testimonial.name}
-              title={testimonial.title}
+              title={testimonial.professional}
               company={testimonial.company}
               mainTestimony={testimonial.mainTestimony}
-              date={testimonial.date}
-              head={testimonial.head}
+              date={` since  :${testimonial.from  } up to -> ${testimonial.to}`}
+              head={testimonial.service}
             />
           )}
         </Slider>

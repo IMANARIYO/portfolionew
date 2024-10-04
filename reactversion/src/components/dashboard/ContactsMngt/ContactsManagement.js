@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Box, Button, Modal, TextField, Typography } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 
-const ContactsManagement = () => {
+const ContactsManagementModule = () => {
     const [contacts, setContacts] = useState([]); // State to hold contact messages
     const [replyModalOpen, setReplyModalOpen] = useState(false); // Modal state for replying
     const [currentContact, setCurrentContact] = useState(null); // Current contact being replied to
@@ -105,4 +105,4 @@ const ContactsManagement = () => {
     );
 };
 
-export default ContactsManagement;
+export default ContactsManagementModule;

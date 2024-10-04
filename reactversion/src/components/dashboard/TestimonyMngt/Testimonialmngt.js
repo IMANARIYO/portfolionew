@@ -18,7 +18,7 @@ const TestimonialsMngt = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [viewTestimonial, setViewTestimonial] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
-  const { register, handleSubmit, reset } = useForm();
+  const { register, handleSubmit, reset,  formState: { errors } } = useForm();
 
   const notify = (message) => toast(message);
 
@@ -93,8 +93,8 @@ const TestimonialsMngt = () => {
       notify("Testimonial updated successfully!");
     } else {
       // Add new testimonial
-      const createdTestimonial = await createTestimony(formData);
-      setTestimonials([...testimonials, createdTestimonial]);
+      const response = await createTestimony(formData);
+      setTestimonials([...testimonials, response.data]);
       notify("Testimonial added successfully!");
     }
 
@@ -209,80 +209,149 @@ const TestimonialsMngt = () => {
 
       {/* Modal for Adding/Editing Testimonial */}
       <Modal open={modalOpen} onClose={handleCloseModal}>
-        <div className="bg-gray-950 p-4 rounded shadow-md max-w-lg mx-auto overflow-auto">
-          <h2 className="text-xl font-bold mb-4">
+      <div className="modal-container  bg-white p-6 rounded-lg shadow-lg max-w-lg mx-auto overflow-auto h-[90vh]">
+        <div className="modal-header flex justify-between items-center mb-4">
+          <h2 className="modal-title text-2xl font-semibold text-black">
             {editingIndex !== null ? "Edit Testimonial" : "Add Testimonial"}
           </h2>
-          <form onSubmit={handleSubmit(onSubmit)} className="mb-4">
+          <button onClick={handleCloseModal} className="modal-close text-black text-lg font-bold">
+            X
+          </button>
+        </div>
+        
+        <form onSubmit={handleSubmit(onSubmit)} className="modal-form mb-4">
+          {/* Name */}
+          <div className="form-group mb-4">
+            <label className="form-label text-sm font-medium text-gray-700">Name:</label>
             <input
               type="text"
               placeholder="Name"
-              {...register("name", { required: true })}
-              className="border p-2 mb-2 w-full rounded"
+              {...register("name", { required: "Name is required" })}
+              className="form-input p-3 border rounded-lg w-full text-gray-700"
             />
+            {errors.name && <span className="form-error text-red-500">{errors.name.message}</span>}
+          </div>
+
+          {/* Contacts */}
+          <div className="form-group mb-4">
+            <label className="form-label text-sm font-medium text-gray-700">Contacts:</label>
             <input
               type="text"
               placeholder="Contacts"
-              {...register("contacts", { required: true })}
-              className="border p-2 mb-2 w-full rounded"
+              {...register("contacts", { required: "Contacts are required" })}
+              className="form-input p-3 border rounded-lg w-full text-gray-700"
             />
+            {errors.contacts && <span className="form-error text-red-500">{errors.contacts.message}</span>}
+          </div>
+
+          {/* Main Testimony */}
+          <div className="form-group mb-4">
+            <label className="form-label text-sm font-medium text-gray-700">Main Testimony:</label>
             <textarea
               placeholder="Main Testimony"
-              {...register("mainTestimony", { required: true })}
-              className="border p-2 mb-2 w-full rounded"
+              {...register("mainTestimony", { required: "Testimony is required" })}
+              className="form-input p-3 border rounded-lg w-full text-gray-700"
             />
+            {errors.mainTestimony && <span className="form-error text-red-500">{errors.mainTestimony.message}</span>}
+          </div>
+
+          {/* Company */}
+          <div className="form-group mb-4">
+            <label className="form-label text-sm font-medium text-gray-700">Company:</label>
             <input
               type="text"
               placeholder="Company"
-              {...register("company", { required: true })}
-              className="border p-2 mb-2 w-full rounded"
+              {...register("company", { required: "Company is required" })}
+              className="form-input p-3 border rounded-lg w-full text-gray-700"
             />
+            {errors.company && <span className="form-error text-red-500">{errors.company.message}</span>}
+          </div>
+
+          {/* Professional */}
+          <div className="form-group mb-4">
+            <label className="form-label text-sm font-medium text-gray-700">Professional:</label>
             <input
               type="text"
               placeholder="Professional"
-              {...register("professional", { required: true })}
-              className="border p-2 mb-2 w-full rounded"
+              {...register("professional", { required: "Professional is required" })}
+              className="form-input p-3 border rounded-lg w-full text-gray-700"
             />
+            {errors.professional && <span className="form-error text-red-500">{errors.professional.message}</span>}
+          </div>
+
+          {/* Service */}
+          <div className="form-group mb-4">
+            <label className="form-label text-sm font-medium text-gray-700">Service:</label>
             <input
               type="text"
               placeholder="Service"
-              {...register("service", { required: true })}
-              className="border p-2 mb-2 w-full rounded"
+              {...register("service", { required: "Service is required" })}
+              className="form-input p-3 border rounded-lg w-full text-gray-700"
             />
-            <label className="block mb-1">From:</label>
+            {errors.service && <span className="form-error text-red-500">{errors.service.message}</span>}
+          </div>
+
+          {/* Date Inputs */}
+          <div className="form-group mb-4">
+            <label className="form-label text-sm font-medium text-gray-700">From:</label>
             <input
               type="date"
-              {...register("from", { required: true })}
-              className="border p-2 mb-2 w-full rounded"
+              {...register("from", { required: "From date is required" })}
+              className="form-input p-3 border rounded-lg w-full text-gray-700"
             />
-            <label className="block mb-1">To:</label>
+            {errors.from && <span className="form-error text-red-500">{errors.from.message}</span>}
+          </div>
+
+          <div className="form-group mb-4">
+            <label className="form-label text-sm font-medium text-gray-700">To:</label>
             <input
               type="date"
-              {...register("to", { required: true })}
-              className="border p-2 mb-2 w-full rounded"
+              {...register("to", { required: "To date is required" })}
+              className="form-input p-3 border rounded-lg w-full text-gray-700"
             />
+            {errors.to && <span className="form-error text-red-500">{errors.to.message}</span>}
+          </div>
+
+          {/* Image Uploads */}
+          <div className="form-group mb-4">
+            <label className="form-label text-sm font-medium text-gray-700">Upload Image:</label>
             <input
               type="file"
               accept="image/*"
               {...register("image")}
-              className="border p-2 mb-2 w-full rounded"
+              className="form-file-input border p-2 mb-2 w-full rounded text-gray-700"
             />
+          </div>
+          <div className="form-group mb-4">
+            <label className="form-label text-sm font-medium text-gray-700">Upload Additional Images:</label>
             <input
               type="file"
               accept="image/*"
               multiple
               {...register("images")}
-              className="border p-2 mb-2 w-full rounded"
+              className="form-file-input border p-2 mb-2 w-full rounded text-gray-700"
             />
+          </div>
+
+          {/* Submit Button */}
+          <div className="modal-footer flex justify-between items-center mt-6">
+            <button
+              type="button"
+              onClick={handleCloseModal}
+              className="cancel-button bg-gray-500 text-white py-2 px-4 rounded-lg hover:bg-gray-600"
+            >
+              Cancel
+            </button>
             <button
               type="submit"
-              className="bg-blue-500 text-white p-2 rounded"
+              className="submit-button bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700"
             >
               {editingIndex !== null ? "Update" : "Add"}
             </button>
-          </form>
-        </div>
-      </Modal>
+          </div>
+        </form>
+      </div>
+    </Modal>
 
       {/* View Testimonial Modal */}
       {viewTestimonial && (

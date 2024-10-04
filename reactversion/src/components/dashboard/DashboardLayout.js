@@ -9,14 +9,14 @@ import"./global.css"
 
 const DashboardLayout = () => {
   return (
-    <div className="flex h-screen  flex-col">
+    <div className="flex flex-col bg-gray-50 text-gray-500">
 
 <div className="flex "id="dashboard">
 <Sidebar />
 
 <div className="flex-1 overflow-y-auto">
   <h1 className="text-2xl font-semibold">Dashboard</h1>
-  <div className=" shadow-md rounded-lg">
+  <div className=" rounded-lg h-full p-4">
     <Outlet /> {/* Render routed components here */}
   </div>
 </div>

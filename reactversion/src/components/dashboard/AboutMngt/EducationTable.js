@@ -3,7 +3,7 @@ import { Box, Button, Card, CardContent, CardMedia, Modal, TextField, Typography
 import { DataGrid } from "@mui/x-data-grid";
 import { education } from "../../data/about";
 
-const EducationTable = () => {
+const EducationTableModule = () => {
     const [educationData, setEducationData] = useState(education);
     const [modalOpen, setModalOpen] = useState(false);
     const [currentItem, setCurrentItem] = useState(null);
@@ -143,4 +143,4 @@ const EducationTable = () => {
     );
 };
 
-export default EducationTable;
+export default EducationTableModule;

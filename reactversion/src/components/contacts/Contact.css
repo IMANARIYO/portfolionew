@@ -31,14 +31,16 @@
   --fourth-level-padding: 40px;
   --fifth-level-padding: 50px;
 }
-
+.container.content-container{
 .contact-wrapper {
  display: flex;
   gap: 20px;
   
+
 }
-
-
+.error-message{
+  color: red ;
+}
 .contact-form, .contact-map, .right-contact {
   background-color: #fff;
   border-radius: 10px;
@@ -219,4 +221,4 @@ flex-wrap: wrap;
   }
 
   
-}
+}}

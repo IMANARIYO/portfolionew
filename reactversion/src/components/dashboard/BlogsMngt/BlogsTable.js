@@ -1,32 +1,34 @@
 import "react-toastify/dist/ReactToastify.css";
+import AddBlogModal from "./AddBlogModal";
 import EditBlogModal from "./EditBlogModal ";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import ViewBlogModal from "./ViewBlogModal";
 import { DataGrid } from "@mui/x-data-grid";
 import { ToastContainer, toast } from "react-toastify";
-
-// Blog posts data
-export const blogPosts = [
-  {
-    id: 1,
-    image: 'images/fullstack.png',
-    title: 'The Future of Web Development',
-    excerpt: 'An in-depth look at emerging trends in web technologies.',
-    category: 'Web Development',
-    author: 'John Doe',
-    date: 'August 29, 2024',
-    likes: 120,
-    dislikes: 5,
-    comments: 15,
-  },
-  // More blog posts...
-];
+import { createBlog, deleteBlogById, getAllBlogs, updateBlogById } from "../../../apirequest/blogApi";
 
 export default function BlogTable() {
-  const [blogData, setBlogData] = useState(blogPosts);
+  const [blogData, setBlogData] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [editBlog, setEditBlog] = useState(null);
+  const [viewBlog, setViewBlog] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
+
+  // Fetch all blogs on component load
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      try {
+        const response = await getAllBlogs();
+        setBlogData(response.data); // Assuming response is an array of blog data
+      } catch (error) {
+        console.error("Error fetching blogs:", error);
+        toast.error("Failed to load blog data.");
+      }
+    };
+    fetchBlogs();
+  }, []);
 
   // Define columns for DataGrid
   const columns = [
@@ -60,7 +62,7 @@ export default function BlogTable() {
       headerName: 'Comments',
       width: 120,
       renderCell: (params) => (
-        <span className="text-blue-500">{params.value} comments</span>
+        <span className="text-blue-500">{params.value.length} comments</span>
       ),
     },
     {
@@ -82,7 +84,7 @@ export default function BlogTable() {
             View
           </button>
           <button
-            onClick={() => handleDelete(params.row.id)}
+            onClick={() => handleDelete(params.row._id)}
             className="text-red-500 hover:underline ml-4"
           >
             Delete
@@ -95,8 +97,8 @@ export default function BlogTable() {
   // Handle search filtering
   const filteredBlogPosts = blogData.filter(
     (post) =>
-      post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      post.category.toLowerCase().includes(searchTerm.toLowerCase())
+      post.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      post.category?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const handleEditClick = (row) => {
@@ -105,30 +107,49 @@ export default function BlogTable() {
   };
 
   const handleViewClick = (row) => {
-    alert(JSON.stringify(row, null, 2)); // You can replace this with a proper modal or view component
+    setViewBlog(row);
+    setIsViewModalOpen(true);
   };
 
-  const handleDelete = (id) => {
-    const updatedData = blogData.filter((post) => post.id !== id);
-    setBlogData(updatedData);
-    toast.success("Blog post deleted successfully!");
+  const handleDelete = async (id) => {
+    try {
+      await deleteBlogById(id);
+      const updatedData = blogData.filter((post) => post._id !== id);
+      setBlogData(updatedData);
+      toast.success("Blog post deleted successfully!");
+    } catch (error) {
+      console.error("Error deleting blog:", error);
+      toast.error("Failed to delete blog post.");
+    }
   };
 
-  const handleAddBlog = (newBlog) => {
-    setBlogData([...blogData, { id: blogData.length + 1, ...newBlog }]);
-    toast.success("Blog post added successfully!");
+  const handleAddBlog = async (newBlog) => {
+    try {
+      const createdBlog = await createBlog(newBlog);
+      setBlogData([...blogData, createdBlog]);
+      toast.success("Blog post added successfully!");
+    } catch (error) {
+      console.error("Error adding blog:", error);
+      toast.error("Failed to add blog post.");
+    }
   };
 
-  const handleUpdateBlog = (updatedBlog) => {
-    const updatedData = blogData.map((post) =>
-      post.id === updatedBlog.id ? updatedBlog : post
-    );
-    setBlogData(updatedData);
-    toast.success("Blog post updated successfully!");
+  const handleUpdateBlog = async (updatedBlog) => {
+    try {
+      await updateBlogById(updatedBlog.get('_id'), updatedBlog);
+      const updatedData = blogData.map((post) =>
+        post._id === updatedBlog.get('_id') ? { ...post, ...updatedBlog } : post
+      );
+      setBlogData(updatedData);
+      toast.success("Blog post updated successfully!");
+    } catch (error) {
+      console.error("Error updating blog:", error);
+      toast.error("Failed to update blog post.");
+    }
   };
 
   return (
-    <div className=" bg-gray-100 min-h-screen">
+    <div className="bg-gray-100 min-h-screen">
       <h1 className="text-3xl font-bold text-center mb-8 text-gray-800">Blog Management Dashboard</h1>
 
       {/* Search Input */}
@@ -152,6 +173,7 @@ export default function BlogTable() {
             rowsPerPageOptions={[5]}
             checkboxSelection
             disableSelectionOnClick
+            getRowId={(row) => row?._id}
           />
         </div>
       </div>
@@ -164,21 +186,25 @@ export default function BlogTable() {
       </button>
 
       {/* Add Blog Modal */}
-      <EditBlogModal
-        isOpen={isAddModalOpen}
+      <AddBlogModal
+        open={isAddModalOpen}
         onClose={() => setIsAddModalOpen(false)}
-        blogPost={null}
-        setBlogPost={setEditBlog}
-        handleAddBlog={handleAddBlog}
+        onAddBlog={handleAddBlog}
       />
 
       {/* Edit Blog Modal */}
       <EditBlogModal
-        isOpen={isEditModalOpen}
+        open={isEditModalOpen}
         onClose={() => setIsEditModalOpen(false)}
-        blogPost={editBlog}
-        setBlogPost={setEditBlog}
-        handleUpdateBlog={handleUpdateBlog}
+        blogData={editBlog}
+        onUpdateBlog={handleUpdateBlog}
+      />
+
+      {/* View Blog Modal */}
+      <ViewBlogModal
+        open={isViewModalOpen}
+        onClose={() => setIsViewModalOpen(false)}
+        blogData={viewBlog}
       />
 
       <ToastContainer />

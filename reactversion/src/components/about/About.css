@@ -221,9 +221,13 @@
   
   .skill i {
     font-size: 5rem;
-    color: var(--secondary-color);
+    /* color: var(--secondary-color); */
+    border-radius: 10px;
+    text-align: center;
+    text-justify: center;
+    padding: 3px;
     /* width: 100%; */
-    background: linear-gradient(90deg, #4caf50, #8bc34a);
+    background: linear-gradient(90deg, #819982, #1b1b1a);
   }
   
   .skill span {
